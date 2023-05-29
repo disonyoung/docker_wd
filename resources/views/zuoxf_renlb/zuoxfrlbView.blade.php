@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-{{--    @foreach($zuoxf_renlbs as $zuoxf_renlb)--}}
+    @foreach($zuoxf_renlbs as $zuoxf_renlb)
         <tr>
 {{--            <td>{{\Carbon\Carbon::parse('1900-1-1')->addDays($zuoxf_renlb->settledate)->format('Y-m')}}</td>--}}
             <td>{{$zuoxf_renlb->settledate}}</td>
