@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div class="control-group">
-                                        <label class="control-label" for="multiSelect">中介</label>
+                                        <label class="control-label" for="multiSelect">关联项目</label>
                                         <div class="controls">
                                             <select multiple="multiple" name="item_id" id="multiSelect" class="chzn-select span4">
                                                 @foreach($items as $item)

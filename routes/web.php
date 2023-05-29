@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function (){
     Route::post('/zuoxf_renlib_zl',[\App\Http\Controllers\Zuoxf_renlbController::class, 'delete'])
         ->name('zxf_rlb_del');
 
-    Route::post('/zuoxf_renlib_update',[\App\Http\Controllers\Zuoxf_renlbController::class, 'update'])
+    Route::get('/zuoxf_renlib_update',[\App\Http\Controllers\Zuoxf_renlbController::class, 'update'])
         ->name('zxf_rlb_update');
 
     Route::get('/zuoxf_renlib_hedui',[\App\Http\Controllers\Zuoxf_renlbController::class, 'hedui'])

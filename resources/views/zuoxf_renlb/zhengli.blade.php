@@ -155,6 +155,12 @@
                     </div>
                 </div>
                 <!-- /block -->
+
+                <div class="block-content collapse in">
+                    <div class="span12">
+                        <a href="{{ route('zxf_rlb_update') }}" >关联协议内容</a>
+                    </div>
+                </div>
             </div>
 
             <div class="row-fluid">
@@ -208,43 +214,43 @@
                                                 </form>
                                             </div>
 
-                                            <div class="span2">
-                                                <form class="form-horizontal" action="{{ route('zxf_add') }}" method="post" enctype="multipart/form-data">
-                                                    @csrf
-                                                    <div class="control-group">
-                                                        <input name="settledate" value="{{$zuoxf_renlb->settledate}}" type="hidden">
-                                                        <input name="intermediary_id" value="{{$zuoxf_renlb['intermediary_id']}}" type="hidden">
-                                                        <input name="city_id" value="{{$zuoxf_renlb['city_id']}}" type="hidden">
-                                                        <input name="partner_id" value="{{$zuoxf_renlb->partner_id}}" type="hidden">
-                                                        <input name="intermediary" value="{{$zuoxf_renlb->intermediary}}" type="hidden">
-                                                        <input name="city" value="{{$zuoxf_renlb->city}}" type="hidden">
-                                                        <input name="partner" value="{{$zuoxf_renlb->partner}}" type="hidden">
-                                                        <input name="item" value="{{$zuoxf_renlb['item']}}" type="hidden">
-                                                        <button type="submit" class="btn btn-primary">{{ $zuoxf_renlb->zuoxf ? "更新" : "写入" }}</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+{{--                                            <div class="span2">--}}
+{{--                                                <form class="form-horizontal" action="{{ route('zxf_add') }}" method="post" enctype="multipart/form-data">--}}
+{{--                                                    @csrf--}}
+{{--                                                    <div class="control-group">--}}
+{{--                                                        <input name="settledate" value="{{$zuoxf_renlb->settledate}}" type="hidden">--}}
+{{--                                                        <input name="intermediary_id" value="{{$zuoxf_renlb['intermediary_id']}}" type="hidden">--}}
+{{--                                                        <input name="city_id" value="{{$zuoxf_renlb['city_id']}}" type="hidden">--}}
+{{--                                                        <input name="partner_id" value="{{$zuoxf_renlb->partner_id}}" type="hidden">--}}
+{{--                                                        <input name="intermediary" value="{{$zuoxf_renlb->intermediary}}" type="hidden">--}}
+{{--                                                        <input name="city" value="{{$zuoxf_renlb->city}}" type="hidden">--}}
+{{--                                                        <input name="partner" value="{{$zuoxf_renlb->partner}}" type="hidden">--}}
+{{--                                                        <input name="item" value="{{$zuoxf_renlb['item']}}" type="hidden">--}}
+{{--                                                        <button type="submit" class="btn btn-primary">{{ $zuoxf_renlb->zuoxf ? "更新" : "写入" }}</button>--}}
+{{--                                                    </div>--}}
+{{--                                                </form>--}}
+{{--                                            </div>--}}
 
-                                            <div class="span4">
-                                                <div class="control-group">
+{{--                                            <div class="span4">--}}
+{{--                                                <div class="control-group">--}}
 {{--                                                    <label class="control-label" for="select01">Select list</label>--}}
-                                                    <div class="controls">
-                                                        <form class="form-horizontal" action="{{ route('zxf_rlb_update') }}" method="post" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <select id="select01" name="xieyi_id" class="chzn-select">
-                                                            <option>中介-阵营-城市</option>
-                                                            @foreach($xieyis as $xieyi)
+{{--                                                    <div class="controls">--}}
+{{--                                                        <form class="form-horizontal" action="{{ route('zxf_rlb_update') }}" method="post" enctype="multipart/form-data">--}}
+{{--                                                        @csrf--}}
+{{--                                                        <select id="select01" name="xieyi_id" class="chzn-select">--}}
+{{--                                                            <option>中介-阵营-城市</option>--}}
+{{--                                                            @foreach($xieyis as $xieyi)--}}
 {{--                                                            <option value="{{$xieyi->id}}">{{$xieyi->intermediary_id}}-{{$xieyi->partner_id}}-{{$xieyi->city_id}}</option>--}}
-                                                            <option value="{{$xieyi->id}}">{{$xieyi->agreement}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                            <input name="settledate" value="{{$zuoxf_renlb['settledate']}}" type="hidden">
-                                                            <input name="item" value="{{$zuoxf_renlb['item']}}" type="hidden">
-                                                            <button type="submit" class="btn btn-primary">更新</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
+{{--                                                            <option value="{{$xieyi->id}}">{{$xieyi->agreement}}</option>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        </select>--}}
+{{--                                                            <input name="settledate" value="{{$zuoxf_renlb['settledate']}}" type="hidden">--}}
+{{--                                                            <input name="item" value="{{$zuoxf_renlb['item']}}" type="hidden">--}}
+{{--                                                            <button type="submit" class="btn btn-primary">更新</button>--}}
+{{--                                                        </form>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
                                         </td>
                                     </tr>
                                 @endforeach

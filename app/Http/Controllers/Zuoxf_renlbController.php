@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\ZuoxfrlbExport;
 use App\Exports\ZuoxfsExport;
 use App\Imports\Zuoxf_renlbsImport;
+use App\Models\ItemByname;
 use App\Models\xieyi;
 use App\Models\Zhongjie;
 use App\Models\Zuoxf;
@@ -90,9 +91,10 @@ class Zuoxf_renlbController extends Controller
             \DB::raw('count(id) as manpower_num'),
             ])
             ->groupby(['settledate','item',])
+            ->orderby('city_id')
+            ->orderby('intermediary_id')
             ->orderby('zuoxf_id')
             ->get();
-        dd($zuoxf_renlbs);
 
 //            ->get()->toArray();
 
@@ -102,7 +104,7 @@ class Zuoxf_renlbController extends Controller
             'zuoxf_renlb.zhengli',
             [
                 'zuoxf_renlbs' => $zuoxf_renlbs,
-                'xieyis' => $xieyis,
+//                'xieyis' => $xieyis,
                 'settledates' => $settledates,//去重后的坐席人力表里的结算日期
                 'filter_settledate' => $filter_settledate,//筛选的结算日期，带回页面
                 'intermediaries' => $intermediaries,//全部中介公司
@@ -138,40 +140,41 @@ class Zuoxf_renlbController extends Controller
     /**
      *
      */
-    public function update(Request $request, Zuoxf_renlb $zuoxf_renlb)
+    public function update(Request $request)
     {
-        $xieyi_id = $request->input('xieyi_id');
-        $settledate = $request->input('settledate');
-        $item = $request->input('item');
-        $xieyi = xieyi::where('id','=',$xieyi_id)
-//            ->select('intermediary_id','zhenying_id','city_id')
-//            ->where('id','=',$xieyi_id)
-            ->first();
-//            ->toArray();
-
-        $items = DB::table('zuoxf_renlbs')
-//            ->join('xieyis')
-            ->select('item')
-            ->where('settledate', $settledate)
-            ->groupby('item')
+        $zuoxf_renlbs = Zuoxf_renlb::select([
+            'settledate','item',
+        ])
+            ->groupby(['settledate','item',])
             ->get()->toArray();
 
+        foreach($zuoxf_renlbs as $zuoxf_renlb) {
+            $settledate = $zuoxf_renlb['settledate'];//更新条件:结算月份
+            $item = $zuoxf_renlb['item'];//更新条件:项目名称
+            $itembyname = ItemByname::where('item_byname', $item)->first();
+            if ($itembyname->xieyi_id) {
+                //更新人管的坐席峰值人力清单里的 'xieyi_id' => $xieyi->id,
+                //                    'intermediary_id' => $xieyi->intermediary_id,
+                //                    'settle_intermediary_id' => $xieyi->settle_intermediary_id,
+                //                    'partner_id' => $xieyi->partner_id,
+                //                    'city_id' => $xieyi->city_id,
+                //                    'intermediary' => $xieyi->zhongjie->name,
+                //                    'settle_intermediary' => $xieyi->jszhongjie->name,
+                //                    'partner' => $xieyi->zhenying->name,
+                //                    'city' => $xieyi->city->name,
+                $this->updateZuoxfrlb($itembyname->xieyi_id,$settledate,$item);
+            }else{
+                dd("项目别名关联协议为空,请更新项目别名(".$item.")!");
+            }
+        }
+//        $xieyi_id = $request->input('xieyi_id');
+//        $settledate = $request->input('settledate');
+//        $item = $request->input('item');
+//        dd($item);
+//        $itembyname = ItemByname::where('item_byname',$item)->get();
 
-        Zuoxf_renlb::where('settledate', $settledate)
-        ->where('item',$item)
-        ->update(
-            [
-                'xieyi_id' => $xieyi->id,
-                'intermediary_id' => $xieyi->intermediary_id,
-                'settle_intermediary_id' => $xieyi->settle_intermediary_id,
-                'partner_id' => $xieyi->partner_id,
-                'city_id' => $xieyi->city_id,
-                'intermediary' => $xieyi->zhongjie->name,
-                'settle_intermediary' => $xieyi->jszhongjie->name,
-                'partner' => $xieyi->zhenying->name,
-                'city' => $xieyi->city->name,
-            ]
-        );
+
+
         return back();
     }
 
@@ -198,5 +201,38 @@ class Zuoxf_renlbController extends Controller
             ->delete();
 
         return back();
+    }
+
+    public function updateZuoxfrlb($xieyi_id,$settledate,$item)//$item是人管导入exl里的项目名称
+    {
+        $xieyi = xieyi::where('id','=',$xieyi_id)
+//            ->select('intermediary_id','zhenying_id','city_id')
+//            ->where('id','=',$xieyi_id)
+            ->first();
+//            ->toArray();
+
+        $items = DB::table('zuoxf_renlbs')
+//            ->join('xieyis')
+            ->select('item')
+            ->where('settledate', $settledate)
+            ->groupby('item')
+            ->get()->toArray();
+
+
+        Zuoxf_renlb::where('settledate', $settledate)
+            ->where('item',$item)
+            ->update(
+                [
+                    'xieyi_id' => $xieyi->id,
+                    'intermediary_id' => $xieyi->intermediary_id,
+                    'settle_intermediary_id' => $xieyi->settle_intermediary_id,
+                    'partner_id' => $xieyi->partner_id,
+                    'city_id' => $xieyi->city_id,
+                    'intermediary' => $xieyi->zhongjie->name,
+                    'settle_intermediary' => $xieyi->jszhongjie->name,
+                    'partner' => $xieyi->zhenying->name,
+                    'city' => $xieyi->city->name,
+                ]
+            );
     }
 }
