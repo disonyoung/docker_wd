@@ -74,8 +74,15 @@ class Zuoxf_renlbController extends Controller
     /**
      *
      */
-    public function zhengli()
+    public function zhengli(Request $request)
     {
+        $intermediaries = Zhongjie::all();
+        $filter_settledate = $request->input('filter_settledate');
+        $filter_settle_intermediary_id = $request->input('filter_settle_intermediary_id');
+        $settledates = Zuoxf_renlb::select('settledate')
+            ->groupby('settledate')
+            ->get();
+
         $zuoxf_renlbs = Zuoxf_renlb::select([
             'settledate','item','intermediary',
             'city','partner','xieyi_id',
@@ -85,17 +92,8 @@ class Zuoxf_renlbController extends Controller
             ->groupby(['settledate','item',])
             ->orderby('zuoxf_id')
             ->get();
+        dd($zuoxf_renlbs);
 
-//        $zuoxf_renlbs = Zuoxf_renlb::where('is_paid','0')
-//            ->select([
-//                'item',
-//                'position',
-//                'settledate',
-//                \DB::raw('count(id) as manpower_num'),
-//                'intermediary','city','partner','intermediary_id','city_id','partner_id'
-////                \DB::raw('count(id) as count_num'),
-//            ])
-//            ->groupby(['settledate','item',])
 //            ->get()->toArray();
 
         $xieyis = DB::table('xieyis')->get();
@@ -105,6 +103,10 @@ class Zuoxf_renlbController extends Controller
             [
                 'zuoxf_renlbs' => $zuoxf_renlbs,
                 'xieyis' => $xieyis,
+                'settledates' => $settledates,//去重后的坐席人力表里的结算日期
+                'filter_settledate' => $filter_settledate,//筛选的结算日期，带回页面
+                'intermediaries' => $intermediaries,//全部中介公司
+                'filter_settle_intermediary_id' => $filter_settle_intermediary_id,//筛选的中介id，带回页面
             ]);
     }
 
