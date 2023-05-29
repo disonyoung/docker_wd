@@ -98,20 +98,81 @@ class ZuoxfController extends Controller
      */
     public function add(Request $request)
     {
-        $settledate = $request->input('settledate');
-        $item = $request->input('item');
-        $intermediary_id = $request->input('intermediary_id');
-        $city_id = $request->input('city_id');
-        $partner_id = $request->input('partner_id');
-        $intermediary = $request->input('intermediary');
-        $city = $request->input('city');
-        $partner = $request->input('partner');
+        $settledate = $request->input('settledate');//结算月份
+        $item = $request->input('item');//项目名称
+        $intermediary_id = $request->input('intermediary_id');//中介id
+        $city_id = $request->input('city_id');//城市id
+        $partner_id = $request->input('partner_id');//阵营id
+        $intermediary = $request->input('intermediary');//中介名称
+        $city = $request->input('city');//城市名称
+        $partner = $request->input('partner');//阵营名称
 
+        $this->addzuoxf($settledate,$item,$intermediary_id,$city_id,$partner_id,$intermediary,$city,$partner);
+
+        return back();
+    }
+
+    /**
+     *
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Zuoxf  $zuoxf
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Zuoxf $zuoxf)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Zuoxf  $zuoxf
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Zuoxf $zuoxf)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Zuoxf  $zuoxf
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Zuoxf $zuoxf)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Zuoxf  $zuoxf
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Zuoxf $zuoxf)
+    {
+        //
+    }
+
+
+    public function addzuoxf($settledate,$item,$intermediary_id,$city_id,$partner_id,$intermediary,$city,$partner)
+    {
         $xieyi = xieyi::where('intermediary_id','=',$intermediary_id)
             ->where('partner_id','=',$partner_id)
             ->where('city_id','=',$city_id)
             ->first();
-
+        //销售职\管理职\服务职\大运营(1234)
         $sales_count = Zuoxf_renlb::where([
             'settledate' => $settledate,
             'item' => $item,
@@ -169,7 +230,7 @@ class ZuoxfController extends Controller
             'position' => '续期',
         ])->count();
         $rear_services_count = $rear_services_count1+$rear_services_count2+$rear_services_count3+$rear_services_count4;
-
+        //整体峰值人力
         $manpower = $sales_count+$managers_count+$services_count+$rear_services_count;
         $price = $xieyi->price;
         $amount = $price * $manpower;
@@ -194,7 +255,7 @@ class ZuoxfController extends Controller
                 'manpower'=>$manpower,
                 'xieyi_id'=>$xieyi->id,
                 'amount' => $amount,
-                ]
+            ]
         );
 
         Zuoxf_renlb::where(
@@ -205,65 +266,8 @@ class ZuoxfController extends Controller
                 'partner_id' => $partner_id,
             ]
         )
-        ->update(['zuoxf_id' => $zxf->id]);
-
-//        $zxfs = Zuoxf::get();
-//        dd($zxfs);
-//        return view('zuoxf.index',['zuoxfs' => $zxfs]);
-
-        return back();
+            ->update(['zuoxf_id' => $zxf->id]);
     }
 
-    /**
-     *
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Zuoxf  $zuoxf
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Zuoxf $zuoxf)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Zuoxf  $zuoxf
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Zuoxf $zuoxf)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Zuoxf  $zuoxf
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Zuoxf $zuoxf)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Zuoxf  $zuoxf
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Zuoxf $zuoxf)
-    {
-        //
-    }
 }
