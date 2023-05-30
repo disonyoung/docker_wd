@@ -107,8 +107,34 @@ class ZuoxfController extends Controller
         $city = $request->input('city');//城市名称
         $partner = $request->input('partner');//阵营名称
 
-        $this->addzuoxf($settledate,$item,$intermediary_id,$city_id,$partner_id,$intermediary,$city,$partner);
+        $this->addzuoxf($settledate, $item, $intermediary_id, $city_id, $partner_id, $intermediary, $city, $partner);
 
+        return back();
+    }
+
+
+    public function adds(Request $request)
+    {
+        $zuoxf_renlbs = Zuoxf_renlb::select([
+            'settledate', 'item', 'intermediary_id', 'city_id', 'partner_id', 'intermediary', 'city', 'partner'
+        ])->where('zuoxf_id', '=', '')
+            ->where('xieyi_id', '<>', '')
+            ->groupby('settledate', 'item')
+            ->get();
+//            ->toArray();
+//        dd($zuoxf_renlbs);
+        foreach ($zuoxf_renlbs as $zuoxf_renlb) {
+            $settledate = $zuoxf_renlb->settledate;//结算月份
+            $item = $zuoxf_renlb->item;//项目名称
+            $intermediary_id = $zuoxf_renlb->intermediary_id;//中介id
+            $city_id = $zuoxf_renlb->city_id;//城市id
+            $partner_id = $zuoxf_renlb->partner_id;//阵营id
+            $intermediary = $zuoxf_renlb->intermediary;//中介名称
+            $city = $zuoxf_renlb->city;//城市名称
+            $partner = $zuoxf_renlb->partner;//阵营名称
+
+            $this->addzuoxf($settledate, $item, $intermediary_id, $city_id, $partner_id, $intermediary, $city, $partner);
+        }
         return back();
     }
 

@@ -27,14 +27,15 @@
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
-                            <form class="form-horizontal" action="{{ route('import') }}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" action="{{ route('import') }}" method="post"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <fieldset>
                                     <div class="span12">
-                                            <div class="control-group">
-                                                <button href="{{ route('zuoxf_export') }}" class="btn btn-primary">Save changes</button>
-                                                <a href="{{ route('zuoxf_export') }}">下载</a>
-                                            </div>
+                                        <div class="control-group">
+                                            <a href="{{ route('zxf_adds') }}" class="btn btn-primary">同步峰值人力表</a>
+                                            <a href="{{ route('zuoxf_export') }}">下载</a>
+                                        </div>
                                     </div>
                                 </fieldset>
                             </form>

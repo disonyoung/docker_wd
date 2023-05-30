@@ -23,19 +23,22 @@ Route::middleware('auth')->group(function (){
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 
     //坐席费zuoxf
-    Route::get('/zuoxfs',[\App\Http\Controllers\ZuoxfController::class, 'index'])
+    Route::get('/zuoxfs', [\App\Http\Controllers\ZuoxfController::class, 'index'])
         ->name('zuoxf.index');
 
-    Route::post('/zxf_add',[\App\Http\Controllers\ZuoxfController::class, 'add'])
+    Route::post('/zxf_add', [\App\Http\Controllers\ZuoxfController::class, 'add'])
         ->name('zxf_add');
 
-    Route::get('/zuoxf_export',[\App\Http\Controllers\ZuoxfController::class, 'export'])
+    Route::get('/zxf_adds', [\App\Http\Controllers\ZuoxfController::class, 'adds'])
+        ->name('zxf_adds');
+
+    Route::get('/zuoxf_export', [\App\Http\Controllers\ZuoxfController::class, 'export'])
         ->name('zuoxf_export');
 
-    Route::get('/zuoxf_hedui',[\App\Http\Controllers\ZuoxfController::class, 'hedui'])
+    Route::get('/zuoxf_hedui', [\App\Http\Controllers\ZuoxfController::class, 'hedui'])
         ->name('zuoxf_hedui');
 
-    Route::post('/zuoxf_hedui_filter',[\App\Http\Controllers\ZuoxfController::class, 'hedui'])
+    Route::post('/zuoxf_hedui_filter', [\App\Http\Controllers\ZuoxfController::class, 'hedui'])
         ->name('zuoxf_hedui_filter');
 
     Route::post('/zuoxf_hedui_export',[\App\Http\Controllers\ZuoxfController::class, 'hedui_export'])
