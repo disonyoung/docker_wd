@@ -25,14 +25,18 @@ class ItemBynameController extends Controller
     //存 项目别名
     public function store(Request $request){
 //        dd($request);
-        $itembyname = new ItemByname();
-        $itembyname->fill([
-            'item_byname' => $request->input('itembyname'),
-            'item_id'=> $request->input('item_id'),
-            'xieyi_id'=> $request->input('xieyi_id'),
-        ]);
-        $itembyname->save();
+        $item_byname = $request->input('itembyname');
+        $item_id = $request->input('item_id');
+        $xieyi_id = $request->input('xieyi_id');
 
-        return back();
+        ItemByname::updateorcreate([
+            'item_byname' => $item_byname,
+            'item_id' => $item_id,
+            'xieyi_id' => $xieyi_id,
+        ]);
+
+        $itemBynames = ItemByname::where('xieyi_id', $xieyi_id)
+            ->get();
+        return view('item.byname.index', ['itembynames' => $itemBynames, 'xieyi_id' => $xieyi_id]);
     }
 }
