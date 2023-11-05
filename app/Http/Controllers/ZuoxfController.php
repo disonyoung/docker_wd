@@ -65,7 +65,7 @@ class ZuoxfController extends Controller
             ->groupby('settledate','settle_intermediary','city_id')
                         ->get();
 
-        return view('zuoxf.hedui',[
+        return view('zuoxf.hedui', [
             'zuoxfs' => $zuoxfs,
             'filter_settledates' => $filter_settledates,
             'filter_intermediaries' => $filter_intermediaries,
@@ -74,9 +74,14 @@ class ZuoxfController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * 按照月份、中介公司，下载坐席费账单，与中介公司核对账单
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
     public function hedui_export(Request $request)
     {
-        $intermediary = Zhongjie::where('id','=',$request->input('export_settle_intermediary_id'))->first();
+        $intermediary = Zhongjie::where('id', '=', $request->input('export_settle_intermediary_id'))->first();
         $intermediary_name = $intermediary->name;
         $export_settledate = $request->input('export_settledate');
         $export_settle_intermediary_id = $request->input('export_settle_intermediary_id');
@@ -93,7 +98,39 @@ class ZuoxfController extends Controller
             $export_settledate,
             $export_settle_intermediary_id,
             $intermediary_name,
-        ))->download(('坐席费-'.$intermediary_name.'-'.$date.'.xlsx'));
+        ))->download(('坐席费-' . $intermediary_name . '-' . $date . '.xlsx'));
+    }
+
+    /**
+     * @param Request $request
+     * 直接邮件给中介公司
+     * @return void
+     */
+    public function hedui_tomail(Request $request)
+    {
+
+        $intermediary = Zhongjie::where('id', '=', $request->input('export_settle_intermediary_id'))->first();
+        $intermediary_name = $intermediary->name;
+        $export_settledate = $request->input('export_settledate');
+        $export_settle_intermediary_id = $request->input('export_settle_intermediary_id');
+//        $date = \Carbon\Carbon::parse('1900-1-1')->addDays($export_settledate)->format('Ym');
+        $date = $export_settledate;
+//        return Excel::download(new ZuoxfHeduiExport, 'zuoxfs_hedui.xlsx');//1,用视图view导出Excel,单sheet
+
+//        return (new ZuoxfHeduiExport)->filter(//2,用数据库查询导出Excel,单sheet.
+//            $request->input('export_settledate'),
+//            $request->input('export_settle_intermediary_id'),
+//            $intermediary->name,
+//        )->download('zxfs.xlsx');
+        return (new ZuoxfHeduiExport(//3,用多sheet导出Excel
+            $export_settledate,
+            $export_settle_intermediary_id,
+            $intermediary_name,
+        ))->download(('坐席费-' . $intermediary_name . '-' . $date . '.xlsx'));
+
+        Mail::to($request->user())->send(new OrderShipped($order));
+
+        return redirect('/orders');
     }
 
     /**

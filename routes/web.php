@@ -41,13 +41,16 @@ Route::middleware('auth')->group(function (){
     Route::post('/zuoxf_hedui_filter', [\App\Http\Controllers\ZuoxfController::class, 'hedui'])
         ->name('zuoxf_hedui_filter');
 
-    Route::post('/zuoxf_hedui_export',[\App\Http\Controllers\ZuoxfController::class, 'hedui_export'])
+    Route::post('/zuoxf_hedui_export', [\App\Http\Controllers\ZuoxfController::class, 'hedui_export'])
         ->name('zuoxf_hedui_export');
+
+    Route::post('/zuoxf_hedui_tomail', [\App\Http\Controllers\ZuoxfController::class, 'hedui_tomail'])
+        ->name('zuoxf_hedui_tomail');
 
 
 //导入坐席费人力表zuoxfrenlb
     Route::get('/zuoxf_renlb', [\App\Http\Controllers\Zuoxf_renlbController::class, 'index'])
-            ->name('zuoxfRenlb');
+        ->name('zuoxfRenlb');
 
     Route::post('/zuoxf_renlb', [\App\Http\Controllers\Zuoxf_renlbController::class, 'index'])
         ->name('zuoxfRenlb');

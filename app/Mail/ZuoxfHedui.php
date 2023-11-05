@@ -26,27 +26,27 @@ class ZuoxfHedui extends Mailable
 
     /**
      * Get the message envelope.
-     *
+     *邮件主题、收件人
      * @return \Illuminate\Mail\Mailables\Envelope
      */
     public function envelope()
     {
         return new Envelope(
-//            from: new Address('jeffrey@example.com', 'Jeffrey Way'),
-            subject: 'Zuoxf Hedui',//主题
+//            from: new Address('jeffrey@example.com', 'Jeffrey Way'),//设置邮件收件人
+            subject: 'Zuoxf Hedui',//设置主题
         );
     }
 
     /**
      * Get the message content definition.
-     *
+     *邮件正文
      * @return \Illuminate\Mail\Mailables\Content
      */
     public function content()
     {
         return new Content(
-            view: 'view.name',
-            with: [
+            view: 'view.name',// resources/views/emails 目录来存放所有的邮件模板
+            with: [//使用 with 方法来手动传递数据到视图中
                 'orderName' => $this->order->name,
                 'orderPrice' => $this->order->price,
             ],
@@ -55,7 +55,7 @@ class ZuoxfHedui extends Mailable
 
     /**
      * Get the attachments for the message.
-     *
+     *获取邮件的附件
      * @return array
      */
     public function attachments()
