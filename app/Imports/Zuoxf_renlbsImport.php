@@ -30,9 +30,9 @@ class Zuoxf_renlbsImport implements ToModel, WithCalculatedFormulas//导入的�
                 ], [
                     'job' => $row[4],
                     'status' => $row[5],
-                    'train_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[6])->format('Y-m'),
-                    'entry_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[7])->format('Y-m'),
-                    'online_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[8])->format('Y-m'),
+                    'train_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[6])->format('Y-m-d'),
+                    'entry_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[7])->format('Y-m-d'),
+                    'online_date' => \Carbon\Carbon::parse('1900-1-1')->addDays($row[8])->format('Y-m-d'),
                     'position' => $row[9],
                 ]
             );

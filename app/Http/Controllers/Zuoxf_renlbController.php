@@ -87,14 +87,18 @@ class Zuoxf_renlbController extends Controller
             ->get();
 
         $zuoxf_renlbs = Zuoxf_renlb::select([
-            'settledate','item','intermediary',
-            'city','partner','xieyi_id',
-            'intermediary_id','city_id','partner_id','zuoxf_id',
+            'settledate', 'item', 'intermediary',
+            'city', 'partner', 'xieyi_id',
+            'intermediary_id', 'city_id', 'partner_id', 'zuoxf_id',
             \DB::raw('count(id) as manpower_num'),
-            ])
-            ->groupby(['settledate','item',])
+            'updated_at',
+        ])
+            ->groupby(['settledate', 'item',])
+            ->orderby('settledate', 'desc')
+            ->orderby('xieyi_id', 'asc')
             ->orderby('city_id')
             ->orderby('intermediary_id')
+            ->orderby('updated_at', 'desc')
             ->orderby('zuoxf_id')
             ->get();
 
@@ -195,7 +199,7 @@ class Zuoxf_renlbController extends Controller
     public function updateZuoxfrlb($settledate, $item)//$item是人管导入exl里的项目名称
     {
         $itembyname = ItemByname::where('item_byname', $item)->first();
-//        $xieyi_id = $itembyname['xieyi_id'];
+//        dd($itembyname);
         $xieyi_id = $itembyname['xieyi_id'];
 //        dd($itembyname);
         $xieyi = xieyi::where('id', $xieyi_id)

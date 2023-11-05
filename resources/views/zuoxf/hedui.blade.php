@@ -90,7 +90,7 @@
                                 <fieldset>
                                     <div class="span12">
                                         <div class="span4">
-                                            <div class="control-group">
+                                            <div class="control-group" hidden="hidden">
                                                 <label class="control-label" for="select01">结算期间</label>
                                                 <div class="controls">
                                                     <select name="export_settledate" id="export_settledate"
@@ -106,15 +106,16 @@
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                    <br><br><br><br><br><br>
+                                                    <br><br><br><br><br><br><br><br>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="span4">
-                                            <div class="control-group">
+                                            <div class="control-group" hidden="hidden">
                                                 <label class="control-label" for="select01">结算中介</label>
                                                 <div class="controls">
-                                                    <select name="export_settle_intermediary_id" id="export_settle_intermediary_id"
+                                                    <select name="export_settle_intermediary_id"
+                                                            id="export_settle_intermediary_id"
                                                             class="chzn-select">
                                                         {{--                                                        <option>选择结算中介</option>--}}
                                                         @foreach($filter_intermediaries as $intermediary)

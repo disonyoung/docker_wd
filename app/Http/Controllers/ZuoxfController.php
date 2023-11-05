@@ -20,8 +20,10 @@ class ZuoxfController extends Controller
      */
     public function index()
     {
-        $zuoxfs = Zuoxf::get();
-        return view('zuoxf.index',['zuoxfs' => $zuoxfs]);
+        $zuoxfs = Zuoxf::orderby('settledate', 'desc')
+            ->orderby('intermediary_id', 'desc')
+            ->get();
+        return view('zuoxf.index', ['zuoxfs' => $zuoxfs]);
     }
 
     /**
@@ -38,6 +40,7 @@ class ZuoxfController extends Controller
         $settle_intermediary_id = $request->input('filter_settle_intermediary_id');
         $filter_settledates = Zuoxf::select('settledate')
             ->groupby('settledate')
+            ->orderby('settledate', 'desc')
             ->get();
         $filter_intermediaries = Zhongjie::select('id','name')
             ->get();

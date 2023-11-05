@@ -34,103 +34,53 @@
                         <div class="span12">
                             <fieldset>
                                 <legend>条件查询</legend>
-                                <div class="span10">
-                                    <form class="form-horizontal" action="{{ route('zuoxfRenlb') }}" method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="span3">
-                                            <div class="control-group">
-                                                <label class="control-label" for="select01">结算期间</label>
-                                                <div class="controls">
-                                                    <select name="filter_settledate" id="filter_settledate"
-                                                            class="chzn-select">
-                                                        <option>选择结算月</option>
-                                                        @foreach($settledates as $settledate)
-                                                            <option
-                                                                value="{{$settledate->settledate}}" @selected( $filter_settledate == $settledate->settledate)>
-                                                                {{
-                                                               \Carbon\Carbon::parse('1900-1-1')->addDays($settledate->settledate)->format('Y-m')
-                                                                }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="span4">
-                                            <div class="control-group">
-                                                <label class="control-label" for="select01">结算中介</label>
-                                                <div class="controls">
-                                                    <select name="filter_settle_intermediary_id" id="select01"
-                                                            class="chzn-select">
-                                                        <option>选择结算中介</option>
-                                                        @foreach($intermediaries as $intermediary)
-                                                            <option
-                                                                value="{{$intermediary->id}}" @selected( $filter_settle_intermediary_id == $intermediary->id)>
-                                                                {{$intermediary->name}}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="span2">
-                                            <div class="control-group">
-                                                <button type="submit" class="btn btn-primary">筛选</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="span10">
-                                    <form class="form-horizontal" action="{{ route('zxfrlb_index_export') }}"
-                                          method="post"
-                                          enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="span3">
-                                            <div class="control-group">
-                                                <label class="control-label" for="select01">结算期间</label>
-                                                <div class="controls">
-                                                    <select name="export_settledate" id="export_settledate"
-                                                            class="chzn-select">
-                                                        <option>选择结算月</option>
-                                                        @foreach($settledates as $settledate)
-                                                            <option
-                                                                value="{{$settledate->settledate}}" @selected( $filter_settledate == $settledate->settledate)>
-                                                                {{
-                                                               \Carbon\Carbon::parse('1900-1-1')->addDays($settledate->settledate)->format('Y-m')
-                                                                }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    <br><br><br><br><br><br><br>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="span4">
-                                            <div class="control-group">
-                                                <label class="control-label" for="select01">结算中介</label>
-                                                <div class="controls">
-                                                    <select name="export_settle_intermediary_id"
-                                                            id="export_settle_intermediary_id"
-                                                            class="chzn-select">
-                                                        <option>选择结算中介</option>
-                                                        @foreach($intermediaries as $intermediary)
-                                                            <option
-                                                                value="{{$intermediary->id}}" @selected( $filter_settle_intermediary_id == $intermediary->id)>
-                                                                {{$intermediary->name}}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="span2">
-                                            <div class="control-group">
-                                                <button type="submit" class="btn btn-primary">下载</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                {{--                                <div class="span10">--}}
+                                {{--                                    <form class="form-horizontal" action="{{ route('zuoxfRenlb') }}" method="post"--}}
+                                {{--                                          enctype="multipart/form-data">--}}
+                                {{--                                        @csrf--}}
+                                {{--                                        <div class="span3">--}}
+                                {{--                                            <div class="control-group">--}}
+                                {{--                                                <label class="control-label" for="select01">结算期间</label>--}}
+                                {{--                                                <div class="controls">--}}
+                                {{--                                                    <select name="filter_settledate" id="filter_settledate"--}}
+                                {{--                                                            class="chzn-select">--}}
+                                {{--                                                        <option>选择结算月</option>--}}
+                                {{--                                                        @foreach($settledates as $settledate)--}}
+                                {{--                                                            <option--}}
+                                {{--                                                                value="{{$settledate->settledate}}" @selected( $filter_settledate == $settledate->settledate)>--}}
+                                {{--                                                                {{--}}
+                                {{--                                                               \Carbon\Carbon::parse('1900-1-1')->addDays($settledate->settledate)->format('Y-m')--}}
+                                {{--                                                                }}--}}
+                                {{--                                                            </option>--}}
+                                {{--                                                        @endforeach--}}
+                                {{--                                                    </select>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                        <div class="span4">--}}
+                                {{--                                            <div class="control-group">--}}
+                                {{--                                                <label class="control-label" for="select01">结算中介</label>--}}
+                                {{--                                                <div class="controls">--}}
+                                {{--                                                    <select name="filter_settle_intermediary_id" id="select01"--}}
+                                {{--                                                            class="chzn-select">--}}
+                                {{--                                                        <option>选择结算中介</option>--}}
+                                {{--                                                        @foreach($intermediaries as $intermediary)--}}
+                                {{--                                                            <option--}}
+                                {{--                                                                value="{{$intermediary->id}}" @selected( $filter_settle_intermediary_id == $intermediary->id)>--}}
+                                {{--                                                                {{$intermediary->name}}--}}
+                                {{--                                                            </option>--}}
+                                {{--                                                        @endforeach--}}
+                                {{--                                                    </select>--}}
+                                {{--                                                </div>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                        <div class="span2">--}}
+                                {{--                                            <div class="control-group">--}}
+                                {{--                                                <button type="submit" class="btn btn-primary">筛选</button>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </form>--}}
+                                {{--                                </div>--}}
                                 <div class="span10">
                                     <form class="form-horizontal" action="{{ route('import') }}" method="post"
                                           enctype="multipart/form-data">
@@ -179,22 +129,11 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    {{--                                    <th>ID</th>--}}
                                     <th>结算期间</th>
-                                    {{--                                    <th>中介</th>--}}
-                                    {{--                                    <th>阵营</th>--}}
-                                    {{--                                    <th>城市</th>--}}
                                     <th>项目名称-原</th>
                                     <th>项目名称</th>
-                                    {{--                                    <th>管理职</th>--}}
-                                    {{--                                    <th>服务职</th>--}}
-                                    {{--                                    <th>大运营</th>--}}
                                     <th>总人力</th>
                                     <th>操作</th>
-
-                                    {{--                                    <th>入职日期</th>--}}
-                                    {{--                                    <th>上线日期</th>--}}
-                                    {{--                                    <th>岗位类别</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
