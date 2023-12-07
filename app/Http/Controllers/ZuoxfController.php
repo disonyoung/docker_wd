@@ -110,6 +110,7 @@ class ZuoxfController extends Controller
      */
     public function hedui_tomail(Request $request)
     {
+        dd($request);
         Mail::to("ydsysy@163.com")->send(new ZuoxfHedui($request));
 //        Mail::to("ydsysy@163.com")->send(new ZuoxfHedui($intermediary,$intermediary_name,$export_settledate,$export_settle_intermediary_id,$date));
 //        Mail::to("dianshang_yang@pkufi.com")->send(new ZuoxfHedui());

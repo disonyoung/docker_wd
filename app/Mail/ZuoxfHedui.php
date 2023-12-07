@@ -2,8 +2,6 @@
 
 namespace App\Mail;
 
-use App\Exports\ZuoxfHeduiExport;
-use App\Models\Zhongjie;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -11,7 +9,6 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Attachment;
-use Maatwebsite\Excel\Facades\Excel;
 
 class ZuoxfHedui extends Mailable
 {
@@ -30,13 +27,7 @@ class ZuoxfHedui extends Mailable
      */
     public function __construct($request)
     {
-        $this->intermediary = Zhongjie::where('id', '=', $request->input('export_settle_intermediary_id'))->first();
-        $this->intermediary_name = $this->intermediary->name;
-        $this->export_settledate = $request->input('export_settledate');
-        $this->export_settle_intermediary_id = $request->input('export_settle_intermediary_id');
-        $this->date = $this->export_settledate;
-
-//        dd($intermediary);
+        //
     }
 
     /**
@@ -75,23 +66,9 @@ class ZuoxfHedui extends Mailable
      */
     public function attachments()
     {
-        $export_settledate = $this->export_settledate;
-        $export_settle_intermediary_id = $this->export_settle_intermediary_id;
-        $intermediary_name = $this->intermediary_name;
-        $date = $this->date;
-
-//        dd((new ZuoxfHeduiExport(//3,用多sheet导出Excel
-//            $export_settledate,
-//            $export_settle_intermediary_id,
-//            $intermediary_name,
-//        ))->download(('坐席费-' . $intermediary_name . '-' .$date. '.xlsx')));
-        return array(
-            Attachment::fromData(new ZuoxfHeduiExport(//3,用多sheet导出Excel
-                $export_settledate,
-                $export_settle_intermediary_id,
-                $intermediary_name,
-            ),
-
-            );
+        return [
+//            Attachment::fromData(fn()=>$data,'aa11')
+//            Attachment::fromPath('/path/to/file'),
+        ];
     }
 }
